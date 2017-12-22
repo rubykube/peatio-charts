@@ -1,0 +1,74 @@
+apiVersion: v1
+entries:
+  mariadb:
+  - appVersion: 10.1.28
+    created: 2017-12-22T15:39:39.696105716+02:00
+    description: Fast, reliable, scalable, and easy to use open-source relational
+      database system. MariaDB Server is intended for mission-critical, heavy-load
+      production systems as well as for embedding into mass-deployed software.
+    digest: e02918586bee836bf2996cd7eea41730e5064274e7c1235c18bebf0bea29714a
+    engine: gotpl
+    home: https://mariadb.org
+    icon: https://bitnami.com/assets/stacks/mariadb/img/mariadb-stack-220x234.png
+    keywords:
+    - mariadb
+    - mysql
+    - database
+    - sql
+    - prometheus
+    maintainers:
+    - email: containers@bitnami.com
+      name: bitnami-bot
+    name: mariadb
+    sources:
+    - https://github.com/bitnami/bitnami-docker-mariadb
+    - https://github.com/prometheus/mysqld_exporter
+    urls:
+    - https://charts.peatio.tech/mariadb-2.0.1.tgz
+    version: 2.0.1
+  rabbitmq:
+  - appVersion: 3.6.12
+    created: 2017-12-22T15:39:39.696717881+02:00
+    description: Open source message broker software that implements the Advanced
+      Message Queuing Protocol (AMQP)
+    digest: 344387e178989fc9873d4108210e8a9c0c56f64a681dad200c38a46f954c82ba
+    engine: gotpl
+    home: https://www.rabbitmq.com
+    icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
+    keywords:
+    - rabbitmq
+    - message queue
+    - AMQP
+    maintainers:
+    - email: containers@bitnami.com
+      name: Bitnami
+    name: rabbitmq
+    sources:
+    - https://github.com/bitnami/bitnami-docker-rabbitmq
+    urls:
+    - https://charts.peatio.tech/rabbitmq-0.6.8.tgz
+    version: 0.6.8
+  redis:
+  - appVersion: 4.0.2
+    created: 2017-12-22T15:39:39.697398943+02:00
+    description: Open source, advanced key-value store. It is often referred to as
+      a data structure server since keys can contain strings, hashes, lists, sets
+      and sorted sets.
+    digest: 279635385ea69132c2fc31642f209dc253f4097e2017bf1abfccaaf454641d9d
+    engine: gotpl
+    home: http://redis.io/
+    icon: https://bitnami.com/assets/stacks/redis/img/redis-stack-220x234.png
+    keywords:
+    - redis
+    - keyvalue
+    - database
+    maintainers:
+    - email: containers@bitnami.com
+      name: bitnami-bot
+    name: redis
+    sources:
+    - https://github.com/bitnami/bitnami-docker-redis
+    urls:
+    - https://charts.peatio.tech/redis-1.0.2.tgz
+    version: 1.0.2
+generated: 2017-12-22T15:39:39.695220021+02:00

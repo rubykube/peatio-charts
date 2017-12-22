@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Peatio charts repository chart :D
+name: peatio-charts
+version: 0.1.0

@@ -1,0 +1,14 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: heliostech/kite
+inputs:
+  - name: repository
+outputs:
+  - name: tag
+run:
+  dir: repository
+  path: sh
+  args: ["-c", "echo -n $(cat VERSION)-$(git rev-parse --short=8 HEAD) > ../tag/name"]

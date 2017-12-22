@@ -1,0 +1,21 @@
+replicaCount: 1
+image:
+  repository: gcr.io/hc-public/peatio/charts
+  tag: 0.1.0
+  pullPolicy: IfNotPresent
+service:
+  name: peatio-charts
+  type: ClusterIP
+  externalPort: 8080
+  internalPort: 8080
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - charts.peatio.tech
+  tls:
+    - secretName: charts-peatio-tech-tls
+      hosts:
+        - charts.peatio.tech
