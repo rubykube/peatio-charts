@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- if .Values.bitcoind.port }}
+    - port: {{ .Values.bitcoind.port }}
+      targetPort: {{ .Values.bitcoind.port }}
+      protocol: TCP
+      name: btcd
+    {{- end }}
+    {{- if .Values.bitcoind.rpc.port }}
+    - port: {{ .Values.bitcoind.rpc.port }}
+      targetPort: {{ .Values.bitcoind.rpc.port }}
+      protocol: TCP
+      name: btcd-rpc
+    {{- end }}
+  selector:
+    app: {{ template "name" . }}
+    release: {{ .Release.Name }}

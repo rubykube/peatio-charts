@@ -1,0 +1,4 @@
+  Credentials:
+
+    RPC User: export RPC_USER="{{ .Values.bitcoind.rpc.username }}"
+    RPC Password: export RPC_PASSWORD="$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }} -o jsonpath="{.data.rpc-password}" | base64 --decode)"
