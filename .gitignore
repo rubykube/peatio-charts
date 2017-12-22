@@ -1,0 +1,6 @@
+/**/*.tgz
+/server
+/static/*
+!/static/index.yaml
+/log/*
+!/log/.keep
