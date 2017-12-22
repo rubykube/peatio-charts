@@ -1,0 +1,29 @@
+#!/bin/bash
+
+REPO_URL=https://charts.peatio.tech
+CHARTS_DIR=stable
+PKG_DIR=static
+
+for chart in $(ls $CHARTS_DIR); do
+	echo -ne "Packaging $chart..."
+	helm package $CHARTS_DIR/$chart -u -d $PKG_DIR \
+		>log/package.$chart.log 2>log/package.$chart.err.log
+
+	if [[ $? -ne 0 ]]; then
+		echo -e "\033[31mError: can't package $chart. Exiting\033[0m" && exit 1
+	else
+		echo -e "\033[32m ok\033[0m"
+	fi
+done
+
+echo -ne "Indexing repo..."
+# merge only if index.yaml already exists
+helm repo index $PKG_DIR --url=$REPO_URL \
+	$(test -f $PKG_DIR/index.yaml && echo -n "--merge=$PKG_DIR/index.yaml") \
+	>log/index.log 2>log/index.err.log
+
+if [[ $? -ne 0 ]]; then
+	echo -e "\033[31mError: can't index the repo. Exiting\033[0m" && exit 1
+else
+	echo -e "\033[32m ok\033[0m"
+fi
