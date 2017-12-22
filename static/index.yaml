@@ -1,8 +1,18 @@
 apiVersion: v1
 entries:
+  bitcoind:
+  - apiVersion: v1
+    created: 2017-12-22T16:05:51.940408245+02:00
+    description: A Helm chart for Kubernetes
+    digest: 962cbaae7396f4ca3540c518c79d0d4a7e6f48bfe8b3df78b674ebb7bfcbd3bc
+    icon: http://www.uidownload.com/files/970/322/327/bitcoin-icon.png
+    name: bitcoind
+    urls:
+    - https://charts.peatio.tech/bitcoind-0.1.0.tgz
+    version: 0.1.0
   mariadb:
   - appVersion: 10.1.28
-    created: 2017-12-22T15:39:39.696105716+02:00
+    created: 2017-12-22T16:05:51.941594495+02:00
     description: Fast, reliable, scalable, and easy to use open-source relational
       database system. MariaDB Server is intended for mission-critical, heavy-load
       production systems as well as for embedding into mass-deployed software.
@@ -28,7 +38,7 @@ entries:
     version: 2.0.1
   rabbitmq:
   - appVersion: 3.6.12
-    created: 2017-12-22T15:39:39.696717881+02:00
+    created: 2017-12-22T16:05:51.942566156+02:00
     description: Open source message broker software that implements the Advanced
       Message Queuing Protocol (AMQP)
     digest: 344387e178989fc9873d4108210e8a9c0c56f64a681dad200c38a46f954c82ba
@@ -50,7 +60,7 @@ entries:
     version: 0.6.8
   redis:
   - appVersion: 4.0.2
-    created: 2017-12-22T15:39:39.697398943+02:00
+    created: 2017-12-22T16:05:51.943595855+02:00
     description: Open source, advanced key-value store. It is often referred to as
       a data structure server since keys can contain strings, hashes, lists, sets
       and sorted sets.
@@ -71,4 +81,4 @@ entries:
     urls:
     - https://charts.peatio.tech/redis-1.0.2.tgz
     version: 1.0.2
-generated: 2017-12-22T15:39:39.695220021+02:00
+generated: 2017-12-22T16:05:51.939607961+02:00
