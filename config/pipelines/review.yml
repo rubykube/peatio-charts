@@ -1,0 +1,41 @@
+resource_types:
+  - name: kite
+    type: docker-image
+    source:
+      repository: heliostech/kite
+
+resources:
+  - name: repository
+    type: git
+    source:
+      uri: git@github.com:rubykube/peatio-charts.git
+      branch: master
+      private_key: ((git_private_key))
+
+  - name: image
+    type: docker-image
+    source:
+      repository: gcr.io/hc-public/peatio-charts
+      username: _json_key
+      password: ((gcr_password))
+
+jobs:
+  - name: build
+    plan:
+      - get: repository
+        trigger: true
+      - task: tag
+        file: repository/config/pipelines/tasks/tag.yml
+      - put: image
+        params:
+          build: repository
+          tag: tag/name
+
+  - name: deploy
+    plan:
+      - get: repository
+      - task: helm-deploy
+        file: repository/config/pipelines/tasks/helm-deploy.yml
+        params:
+          GOOGLE_APPLICATION_JSON: ((gcr_password))
+          KUBECONFIG_FILE: ((kubeconfig))
