@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  bitcoin.conf: |-
+    {{- if .Values.bitcoind.testnet }}
+    testnet=1
+    {{- else }}
+    {{- if .Values.bitcoind.regtest }}
+    regtest=1
+    dnsseed=0
+    upnp=0
+    {{- end }}
+    {{- end }}
+
+    {{- if .Values.bitcoind.logs }}
+    printtoconsole=1
+    {{- end }}
+
+    server=1
+    port={{ .Values.bitcoind.port }}
+
+    rpcallowip=0.0.0.0/0
+    rpcport={{ .Values.bitcoind.rpc.port }}
+    rpcuser={{ .Values.bitcoind.rpc.username }}

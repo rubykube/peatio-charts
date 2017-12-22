@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: rubykube/bitcoind
+  tag: latest
+  pullPolicy: IfNotPresent
+
+bitcoind:
+  regtest: true
+  # testnet: true
+  logs: true
+  port: 19000
+  rpc:
+    username: peatio
+    port: 19001
+
+service:
+  type: LoadBalancer
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 300m

@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      initContainers:
+        - name: copy-config
+          image: busybox
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sh", "-c", "mkdir -p /bitcoin/.bitcoin && cp /tmp/btc/bitcoin.conf /bitcoin/.bitcoin/bitcoin.conf"]
+          volumeMounts:
+            - name: config
+              mountPath: /tmp/btc
+            - name: data
+              mountPath: /bitcoin
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["sh", "-c", "bitcoind -rpcpassword=$RPC_PASSWORD"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: RPC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: rpc-password
+          ports:
+            {{- if .Values.bitcoind.port }}
+            - containerPort: {{ .Values.bitcoind.port }}
+              name: btcd
+            {{- end }}
+            {{- if .Values.bitcoind.rpc.port }}
+            - containerPort: {{ .Values.bitcoind.rpc.port }}
+              name: btcd-rpc
+            {{- end }}
+          volumeMounts:
+            - name: data
+              mountPath: /bitcoin
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "fullname" . }}
+        - name: data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
